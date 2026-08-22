@@ -1,18 +1,14 @@
 const Notification = () => {
   const style = {
-    border: 'solid',
+    border: "solid",
     padding: 10,
     borderWidth: 1,
-    marginBottom: 5
+    marginBottom: 5,
   }
-  
+
   if (true) return null
 
-  return (
-    <div style={style}>
-      
-    </div>
-  )
+  return <div data-testid="notification" style={style}></div>
 }
 
 export default Notification

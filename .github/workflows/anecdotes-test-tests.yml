@@ -1,4 +1,4 @@
-name: Anecdotes unit tests
+name: Anecdotes tests check
 
 on:
   push:

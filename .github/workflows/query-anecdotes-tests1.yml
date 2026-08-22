@@ -1,4 +1,4 @@
-name: Unicafe tests
+name: Query anecdotes tests 1
 
 on:
   push:
@@ -14,26 +14,26 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install unicafe dependencies
-        working-directory: unicafe
+      - name: Install query-anecdotes dependencies
+        working-directory: query-anecdotes
         run: npm ci
 
       - name: Install test dependencies
-        working-directory: unicafe-tests
+        working-directory: query-anecdotes-tests
         run: npm ci
 
       - name: Install Playwright browsers
-        working-directory: unicafe-tests
+        working-directory: query-anecdotes-tests
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        working-directory: unicafe-tests
-        run: npx playwright test
+        working-directory: query-anecdotes-tests
+        run: npm run test:anecdotes
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
-          path: unicafe-tests/playwright-report/
+          name: query-anecdotes-playwright-report
+          path: query-anecdotes-tests/playwright-report/
           retention-days: 14

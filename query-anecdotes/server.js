@@ -1,28 +1,41 @@
-import jsonServer from 'json-server'
+import { randomUUID } from "node:crypto"
+import { App } from "@tinyhttp/app"
+import { cors } from "@tinyhttp/cors"
+import { json } from "milliparsec"
+import { Low } from "lowdb"
+import { JSONFile } from "lowdb/node"
+import { createApp } from "json-server/lib/app.js"
 
-const server = jsonServer.create()
-const router = jsonServer.router('db.json')
-const middlewares = jsonServer.defaults()
+const dbFile = process.env.DB_FILE || "db.json"
+const db = new Low(new JSONFile(dbFile), { anecdotes: [] })
+await db.read()
 
-const validator = (request, response, next) => {
-  console.log()
+const app = new App()
 
-  const { content } = request.body
+app.use(cors())
+app.options("*", cors())
 
-  if (request.method === 'POST' && (!content || content.length < 5)) {
-    return response.status(400).json({
-      error: 'too short anecdote, must have length 5 or more',
+// Handled separately (instead of letting json-server's generic POST route
+// create the anecdote) so a too-short anecdote can be rejected with a 400
+// before it is written to the db.
+app.post("/anecdotes", json(), async (req, res) => {
+  const { content } = req.body ?? {}
+
+  if (!content || content.length < 5) {
+    return res.status(400).json({
+      error: "too short anecdote, must have length 5 or more",
     })
-  } else {
-    next()
   }
-}
 
-server.use(middlewares)
-server.use(jsonServer.bodyParser)
-server.use(validator)
-server.use(router)
+  const anecdote = { content, votes: 0, id: randomUUID() }
+  db.data.anecdotes.push(anecdote)
+  await db.write()
 
-server.listen(3001, () => {
-  console.log('JSON Server is running')
+  res.status(201).json(anecdote)
+})
+
+app.use(createApp(db))
+
+app.listen(3001, () => {
+  console.log("JSON Server is running")
 })

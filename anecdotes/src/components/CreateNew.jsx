@@ -9,7 +9,7 @@ function CreateNew() {
   function onSubmit(event) {
     event.preventDefault()
 
-    const anecdote = event.target.content.value
+    const anecdote = event.target.anecdote.value
 
     if (!anecdote) {
       console.error('empty anecdote')
@@ -21,11 +21,11 @@ function CreateNew() {
     }
 
     addNew(anecdote)
-    console.log(`added new anecdote "${event.target.content.value}"`)
+    console.log(`added new anecdote "${event.target.anecdote.value}"`)
     showInfo('anecdote added successfully!')
 
     // reset
-    event.target.content.value = ''
+    event.target.anecdote.value = ''
   }
 
   return(
@@ -33,7 +33,7 @@ function CreateNew() {
       <h2>create new</h2>
       <form onSubmit={onSubmit}>
         <div>
-          <input name='content'/>
+          <input name='anecdote'/>
         </div>
         <button type='submit'>create</button>
       </form>            

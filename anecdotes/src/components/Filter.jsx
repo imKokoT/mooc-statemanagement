@@ -14,7 +14,7 @@ function Filter() {
 
   return (
     <div style={style}>
-      filter <input onChange={handleChange} />
+      filter <input data-testid='filter' onChange={handleChange} />
     </div>
   )
 }

@@ -26,7 +26,7 @@ function Notification() {
   )
 
   return (
-    <div style={style}>
+    <div style={style} data-testid='notification'>
       {msg}
     </div>
   ) 

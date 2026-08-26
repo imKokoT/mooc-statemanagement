@@ -6,9 +6,10 @@ function Anecdote({ anecdote }) {
   const { voteUp, deleteOne } = useAnecdoteActions()
   const { showInfo } = useNotificationActions()
 
-  function vote(id) {
+  function vote(id, content) {
     voteUp(id)
     console.log('vote', id)
+    showInfo(`you voted '${content}'`)
   }
 
   async function deleteSelf() {
@@ -22,7 +23,7 @@ function Anecdote({ anecdote }) {
       <div>{anecdote.content}</div>
       <div>
         has {anecdote.votes}
-        <button onClick={() => vote(anecdote.id)}>vote</button>
+        <button onClick={() => vote(anecdote.id, anecdote.content)}>vote</button>
         
         {/* if zero votes, show delete button */}
         {anecdote.votes === 0 && <button onClick={deleteSelf}>delete</button>}

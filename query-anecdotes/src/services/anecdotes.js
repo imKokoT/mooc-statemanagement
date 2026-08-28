@@ -15,10 +15,7 @@ async function createNew(content) {
     const response = await fetch(baseUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            content: content,
-            votes: 0 
-        }),
+        body: JSON.stringify(content),
     })
     
     if (!response.ok)

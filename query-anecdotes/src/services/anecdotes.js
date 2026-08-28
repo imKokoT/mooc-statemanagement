@@ -18,8 +18,10 @@ async function createNew(content) {
         body: JSON.stringify(content),
     })
     
-    if (!response.ok)
-        throw new Error('Failed to create anecdote')
+    if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error)
+    }
   
   return await response.json()
 }

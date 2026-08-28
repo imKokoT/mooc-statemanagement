@@ -37,8 +37,10 @@ export const useAnecdotes = () => {
     error: anecdotes.error,
     isError: anecdotes.isError,
 
-    addNew: (content) => {
-      newAnecdoteMutation.mutate({ content, votes: 0 })
+    addNew: (content, onError) => {
+      newAnecdoteMutation.mutate({ content, votes: 0 }, {
+        onError: error => onError(error)
+      })
     },
     voteUp: (anecdote) => updateAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 }),
     deleteOne: (anecdote) => deleteAnecdoteMutation.mutate(anecdote)

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
-import AnecdotesService from '../src/services/anecdotes'
-import useAnecdoteStore, { useAnecdoteActions, useAnecdotes } from '../src/states/anecdotes'
+import AnecdotesService from './services/anecdotes'
+import useAnecdoteStore, { useAnecdoteActions, useAnecdotes } from './states/anecdotes'
 
 
 vi.mock('../src/services/anecdotes', () => ({
